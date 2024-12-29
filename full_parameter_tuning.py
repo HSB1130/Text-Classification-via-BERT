@@ -19,7 +19,8 @@ class FullParamModel(nn.Module):
             attention_mask=attn_mask, 
             token_type_ids=token_type_ids
         )
-        output_dropout = self.dropout(output.pooler_output)
+        cls_output = output.last_hidden_state[:, 0, :]
+        output_dropout = self.dropout(cls_output)
         output = self.classifier(output_dropout)
         return output
 
